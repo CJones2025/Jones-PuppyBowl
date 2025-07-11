@@ -35,3 +35,12 @@ body {
   border-radius: 6px;
 }
 
+.single-player img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 1rem;
+  border-radius: 8px; 
+  object-fit: cover; 
+}
