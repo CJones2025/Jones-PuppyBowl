@@ -49,6 +49,27 @@ async function fetchPlayerById(id) {
   }
 }
 
+// === Remove Player By ID ===
+async function removePlayerById(id) {
+  try {
+    const res = await fetch(`${API}/players/${id}`, {
+      method: "DELETE"
+    });
+    const json = await res.json();
+
+    if (json.success) {
+      players = players.filter(p => p.id !== id);
+      renderAllPlayers();
+      $main.innerHTML = "<p>No player selected.</p>";
+    } else {
+      throw new Error("Failed to remove player.");
+    }
+  } catch (error) {
+    console.error("Error removing player:", error);
+    alert("Failed to remove player. Try again.");
+  }
+}
+
 // === Render All Players ===
 function renderAllPlayers() {
   $main.innerHTML = "";
@@ -65,7 +86,6 @@ function renderAllPlayers() {
       <button class="details-btn">See Details</button>
     `;
 
-    
     const $detailsBtn = $li.querySelector(".details-btn");
     $detailsBtn.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -97,11 +117,19 @@ async function renderSinglePlayer(id) {
         <p><strong>Breed:</strong> ${player.breed}</p>
         <p><strong>Status:</strong> ${player.status}</p>
         <p><strong>Team:</strong> ${player.team?.name || "Unassigned"}</p>
+        <button id="remove-btn">Remove Player</button>
         <button id="back-btn">Back to List</button>
       </section>
     `;
 
-    
+    // Handle remove player
+    document.getElementById("remove-btn").addEventListener("click", async () => {
+      const confirmDelete = confirm("Are you sure you want to remove this player?");
+      if (!confirmDelete) return;
+      await removePlayerById(id);
+    });
+
+    // Handle back to list
     document.getElementById("back-btn").addEventListener("click", () => {
       renderAllPlayers();
     });
