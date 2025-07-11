@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+#loading-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255,255,255,0.8);
+  z-index: 100;
+}
+
+.player-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0;
+}
+
+.player-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  width: 200px;
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.player-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
