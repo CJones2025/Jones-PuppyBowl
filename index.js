@@ -51,7 +51,7 @@ async function fetchPlayerById(id) {
 
 // === Render All Players ===
 function renderAllPlayers() {
-  $main.innerHTML = ""; // Clear previous content
+  $main.innerHTML = "";
   const $ul = document.createElement("ul");
   $ul.classList.add("player-list");
 
@@ -68,7 +68,7 @@ function renderAllPlayers() {
     
     const $detailsBtn = $li.querySelector(".details-btn");
     $detailsBtn.addEventListener("click", (event) => {
-      event.stopPropagation(); // Prevent bubbling if you add other listeners
+      event.stopPropagation();
       renderSinglePlayer(player.id);
     });
 
