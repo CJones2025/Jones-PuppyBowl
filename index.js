@@ -151,7 +151,7 @@ $form.addEventListener("submit", async (e) => {
   showLoading();
   try {
     await createPlayer(name, breed, imageUrl, status);
-    await fetchAllPlayers(); // Refresh list
+    await fetchAllPlayers();
     $form.reset();
   } catch (error) {
     console.error("Form submission error:", error);
