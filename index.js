@@ -5,7 +5,6 @@ const API = `${BASE}/${COHORT}`;
 
 const $main = document.getElementById("content");
 const $loading = document.getElementById("loading-screen");
-const $form = document.querySelector("form");
 
 // === State ===
 let players = [];
@@ -37,6 +36,7 @@ async function fetchAllPlayers() {
 
 // === Fetch Single Player By ID ===
 async function fetchPlayerById(id) {
+  showLoading();
   try {
     const res = await fetch(`${API}/players/${id}`);
     const json = await res.json();
@@ -44,31 +44,17 @@ async function fetchPlayerById(id) {
   } catch (error) {
     console.error("Failed to fetch player by ID:", error);
     $main.innerHTML = "<p>Unable to load player details.</p>";
+  } finally {
+    hideLoading();
   }
 }
 
-// === Create Player ===
-async function createPlayer(name, breed, imageUrl = "", status = "bench") {
-  try {
-    const res = await fetch(`${API}/players`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ name, breed, imageUrl, status })
-    });
-
-    const json = await res.json();
-
-    if (json.success) {
-      return json.data.newPlayer;
-    } else {
-      throw new Error("Failed to create player.");
-    }
-  } catch (error) {
-    console.error("Error creating player:", error);
-    alert("Failed to add new puppy. Please try again.");
-  }
+// === Render Default Message ===
+function renderDefaultMessage() {
+  const $message = document.createElement("section");
+  $message.className = "default-message";
+  $message.innerHTML = `<p>Select a puppy to see more details.</p>`;
+  $main.appendChild($message);
 }
 
 // === Render All Players ===
@@ -77,7 +63,7 @@ function renderAllPlayers() {
   const $ul = document.createElement("ul");
   $ul.classList.add("player-list");
 
-  players.forEach(player => {
+  players.forEach((player) => {
     const $li = document.createElement("li");
     $li.classList.add("player-card");
 
@@ -85,18 +71,40 @@ function renderAllPlayers() {
       <h2>${player.name}</h2>
       <img src="${player.imageUrl}" alt="${player.name}" />
       <button class="details-btn">See Details</button>
+      <button class="remove-btn">Remove Player</button>
     `;
 
+    // Details button event
     const $detailsBtn = $li.querySelector(".details-btn");
     $detailsBtn.addEventListener("click", (event) => {
       event.stopPropagation();
       renderSinglePlayer(player.id);
     });
 
+    // Remove button event
+    const $removeBtn = $li.querySelector(".remove-btn");
+    $removeBtn.addEventListener("click", async (event) => {
+      event.stopPropagation();
+      const confirmRemove = confirm(
+        `Are you sure you want to remove ${player.name} from the roster?`
+      );
+      if (!confirmRemove) return;
+      showLoading();
+      try {
+        await removePlayerById(player.id);
+        await fetchAllPlayers();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        hideLoading();
+      }
+    });
+
     $ul.appendChild($li);
   });
 
-  $main.appendChild($ul);
+renderDefaultMessage();
+$main.appendChild($ul);
 }
 
 // === Render Single Player Details ===
@@ -123,9 +131,8 @@ async function renderSinglePlayer(id) {
     `;
 
     document.getElementById("back-btn").addEventListener("click", () => {
-      renderAllPlayers();
+      fetchAllPlayers();
     });
-
   } catch (error) {
     console.error("Error rendering single player:", error);
     $main.innerHTML = "<p>Error loading player details.</p>";
@@ -134,31 +141,21 @@ async function renderSinglePlayer(id) {
   }
 }
 
-// === Form Submit Handler ===
-$form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById("new-name").value.trim();
-  const breed = document.getElementById("new-breed").value.trim();
-  const imageUrl = document.getElementById("new-image").value.trim();
-  const status = document.getElementById("new-status").value;
-
-  if (!name || !breed) {
-    alert("Please enter both name and breed.");
-    return;
-  }
-
-  showLoading();
+// === Remove Player By ID ===
+async function removePlayerById(id) {
   try {
-    await createPlayer(name, breed, imageUrl, status);
-    await fetchAllPlayers(); // Refresh list
-    $form.reset();
+    const res = await fetch(`${API}/players/${id}`, {
+      method: "DELETE",
+    });
+    const json = await res.json();
+    if (!json.success) {
+      throw new Error("Failed to remove player");
+    }
   } catch (error) {
-    console.error("Form submission error:", error);
-  } finally {
-    hideLoading();
+    console.error("Failed to remove player:", error);
+    alert("Could not remove player.");
   }
-});
+}
 
 // === Init ===
 fetchAllPlayers();

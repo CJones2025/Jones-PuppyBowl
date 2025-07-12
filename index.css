@@ -44,3 +44,12 @@ body {
   border-radius: 8px; 
   object-fit: cover; 
 }
+
+.default-message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  font-style: italic;
+  color: #555;
+  text-align: center;
+}
+
