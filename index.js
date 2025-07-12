@@ -1,3 +1,4 @@
+
 // === Constants ===
 const BASE = "https://fsa-puppy-bowl.herokuapp.com/api";
 const COHORT = "2505-Cody";
@@ -57,3 +58,5 @@ function renderAllPlayers() {
 
 // === Init ===
 fetchAllPlayers();
+=======
+
