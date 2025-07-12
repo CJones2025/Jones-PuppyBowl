@@ -35,7 +35,6 @@ async function fetchAllPlayers() {
   }
 }
 
-
 // === Fetch Single Player By ID ===
 async function fetchPlayerById(id) {
   showLoading();
@@ -51,6 +50,8 @@ async function fetchPlayerById(id) {
   }
 }
 
+
+=======
 // === Render Default Message ===
 function renderDefaultMessage() {
   const $message = document.createElement("section");
@@ -59,12 +60,16 @@ function renderDefaultMessage() {
   $main.appendChild($message);
 }
 
+
 // === Render All Players ===
 function renderAllPlayers() {
   $main.innerHTML = "";
   const $ul = document.createElement("ul");
   $ul.classList.add("player-list");
 
+
+  players.forEach(player => {
+=======
   players.forEach((player) => {
 =======
 // === Render All Players ===
@@ -75,6 +80,7 @@ function renderAllPlayers() {
 
   players.forEach(player => {
 
+
     const $li = document.createElement("li");
     $li.classList.add("player-card");
 
@@ -83,16 +89,29 @@ function renderAllPlayers() {
       <img src="${player.imageUrl}" alt="${player.name}" />
 
       <button class="details-btn">See Details</button>
+    `;
+
+    
+=======
+
+      <button class="details-btn">See Details</button>
       <button class="remove-btn">Remove Player</button>
     `;
 
     // Details button event
+
     const $detailsBtn = $li.querySelector(".details-btn");
     $detailsBtn.addEventListener("click", (event) => {
       event.stopPropagation();
       renderSinglePlayer(player.id);
     });
 
+
+    $ul.appendChild($li);
+  });
+
+  $main.appendChild($ul);
+=======
     // Remove button event
     const $removeBtn = $li.querySelector(".remove-btn");
     $removeBtn.addEventListener("click", async (event) => {
@@ -117,6 +136,7 @@ function renderAllPlayers() {
 
 renderDefaultMessage();
 $main.appendChild($ul);
+
 }
 
 // === Render Single Player Details ===
@@ -142,9 +162,17 @@ async function renderSinglePlayer(id) {
       </section>
     `;
 
+
+    
+    document.getElementById("back-btn").addEventListener("click", () => {
+      renderAllPlayers();
+    });
+
+=======
     document.getElementById("back-btn").addEventListener("click", () => {
       fetchAllPlayers();
     });
+
   } catch (error) {
     console.error("Error rendering single player:", error);
     $main.innerHTML = "<p>Error loading player details.</p>";
@@ -153,6 +181,8 @@ async function renderSinglePlayer(id) {
   }
 }
 
+
+=======
 // === Remove Player By ID ===
 async function removePlayerById(id) {
   try {
@@ -176,6 +206,7 @@ async function removePlayerById(id) {
   $main.appendChild($ul);
 
 }
+
 
 // === Init ===
 fetchAllPlayers();
