@@ -47,3 +47,14 @@ body {
 }
 
 
+=======
+.default-message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  font-style: italic;
+  color: #555;
+  text-align: center;
+}
+
+
+
