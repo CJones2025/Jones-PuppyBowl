@@ -1,3 +1,4 @@
+
 // === Constants ===
 const BASE = "https://fsa-puppy-bowl.herokuapp.com/api";
 const COHORT = "2505-Cody";
@@ -34,6 +35,7 @@ async function fetchAllPlayers() {
   }
 }
 
+
 // === Fetch Single Player By ID ===
 async function fetchPlayerById(id) {
   showLoading();
@@ -64,12 +66,22 @@ function renderAllPlayers() {
   $ul.classList.add("player-list");
 
   players.forEach((player) => {
+=======
+// === Render All Players ===
+function renderAllPlayers() {
+  $main.innerHTML = ""; // Clear previous content
+  const $ul = document.createElement("ul");
+  $ul.classList.add("player-list");
+
+  players.forEach(player => {
+
     const $li = document.createElement("li");
     $li.classList.add("player-card");
 
     $li.innerHTML = `
       <h2>${player.name}</h2>
       <img src="${player.imageUrl}" alt="${player.name}" />
+
       <button class="details-btn">See Details</button>
       <button class="remove-btn">Remove Player</button>
     `;
@@ -155,6 +167,14 @@ async function removePlayerById(id) {
     console.error("Failed to remove player:", error);
     alert("Could not remove player.");
   }
+=======
+    `;
+
+    $ul.appendChild($li);
+  });
+
+  $main.appendChild($ul);
+
 }
 
 // === Init ===
