@@ -1,3 +1,4 @@
+
 // === Constants ===
 const BASE = "https://fsa-puppy-bowl.herokuapp.com/api";
 const COHORT = "2505-Cody";
@@ -5,7 +6,9 @@ const API = `${BASE}/${COHORT}`;
 
 const $main = document.getElementById("content");
 const $loading = document.getElementById("loading-screen");
+
 const $form = document.querySelector("form");
+
 
 // === State ===
 let players = [];
@@ -34,6 +37,7 @@ async function fetchAllPlayers() {
     hideLoading();
   }
 }
+
 
 // === Fetch Single Player By ID ===
 async function fetchPlayerById(id) {
@@ -74,6 +78,11 @@ async function createPlayer(name, breed, imageUrl = "", status = "bench") {
 // === Render All Players ===
 function renderAllPlayers() {
   $main.innerHTML = "";
+
+// === Render All Players ===
+function renderAllPlayers() {
+  $main.innerHTML = ""; // Clear previous content
+
   const $ul = document.createElement("ul");
   $ul.classList.add("player-list");
 
@@ -84,6 +93,7 @@ function renderAllPlayers() {
     $li.innerHTML = `
       <h2>${player.name}</h2>
       <img src="${player.imageUrl}" alt="${player.name}" />
+
       <button class="details-btn">See Details</button>
     `;
 
@@ -93,11 +103,16 @@ function renderAllPlayers() {
       renderSinglePlayer(player.id);
     });
 
+
+    `;
+
+
     $ul.appendChild($li);
   });
 
   $main.appendChild($ul);
 }
+
 
 // === Render Single Player Details ===
 async function renderSinglePlayer(id) {
@@ -162,3 +177,7 @@ $form.addEventListener("submit", async (e) => {
 
 // === Init ===
 fetchAllPlayers();
+
+// === Init ===
+fetchAllPlayers();
+
