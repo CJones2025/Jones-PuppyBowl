@@ -5,6 +5,7 @@ const API = `${BASE}/${COHORT}`;
 
 const $main = document.getElementById("content");
 const $loading = document.getElementById("loading-screen");
+const $form = document.querySelector("form");
 
 // === State ===
 let players = [];
@@ -36,7 +37,6 @@ async function fetchAllPlayers() {
 
 // === Fetch Single Player By ID ===
 async function fetchPlayerById(id) {
-  showLoading();
   try {
     const res = await fetch(`${API}/players/${id}`);
     const json = await res.json();
@@ -44,29 +44,30 @@ async function fetchPlayerById(id) {
   } catch (error) {
     console.error("Failed to fetch player by ID:", error);
     $main.innerHTML = "<p>Unable to load player details.</p>";
-  } finally {
-    hideLoading();
   }
 }
 
-// === Remove Player By ID ===
-async function removePlayerById(id) {
+// === Create Player ===
+async function createPlayer(name, breed, imageUrl = "", status = "bench") {
   try {
-    const res = await fetch(`${API}/players/${id}`, {
-      method: "DELETE"
+    const res = await fetch(`${API}/players`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, breed, imageUrl, status })
     });
+
     const json = await res.json();
 
     if (json.success) {
-      players = players.filter(p => p.id !== id);
-      renderAllPlayers();
-      $main.innerHTML = "<p>No player selected.</p>";
+      return json.data.newPlayer;
     } else {
-      throw new Error("Failed to remove player.");
+      throw new Error("Failed to create player.");
     }
   } catch (error) {
-    console.error("Error removing player:", error);
-    alert("Failed to remove player. Try again.");
+    console.error("Error creating player:", error);
+    alert("Failed to add new puppy. Please try again.");
   }
 }
 
@@ -117,19 +118,10 @@ async function renderSinglePlayer(id) {
         <p><strong>Breed:</strong> ${player.breed}</p>
         <p><strong>Status:</strong> ${player.status}</p>
         <p><strong>Team:</strong> ${player.team?.name || "Unassigned"}</p>
-        <button id="remove-btn">Remove Player</button>
         <button id="back-btn">Back to List</button>
       </section>
     `;
 
-    // Handle remove player
-    document.getElementById("remove-btn").addEventListener("click", async () => {
-      const confirmDelete = confirm("Are you sure you want to remove this player?");
-      if (!confirmDelete) return;
-      await removePlayerById(id);
-    });
-
-    // Handle back to list
     document.getElementById("back-btn").addEventListener("click", () => {
       renderAllPlayers();
     });
@@ -141,6 +133,32 @@ async function renderSinglePlayer(id) {
     hideLoading();
   }
 }
+
+// === Form Submit Handler ===
+$form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("new-name").value.trim();
+  const breed = document.getElementById("new-breed").value.trim();
+  const imageUrl = document.getElementById("new-image").value.trim();
+  const status = document.getElementById("new-status").value;
+
+  if (!name || !breed) {
+    alert("Please enter both name and breed.");
+    return;
+  }
+
+  showLoading();
+  try {
+    await createPlayer(name, breed, imageUrl, status);
+    await fetchAllPlayers(); // Refresh list
+    $form.reset();
+  } catch (error) {
+    console.error("Form submission error:", error);
+  } finally {
+    hideLoading();
+  }
+});
 
 // === Init ===
 fetchAllPlayers();
