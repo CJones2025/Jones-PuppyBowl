@@ -26,6 +26,44 @@
 </html>
 =======
 <html>
+
+<head>
+  <title>Puppy Bowl</title>
+  <link rel="stylesheet" href="index.css" />
+  <script src="index.js" defer></script>
+</head>
+<body>
+  <div id="loading-screen" style="display:none;">
+    <img src="images/sr.gif" alt="Loading..." />
+  </div>
+
+  <header>
+    <h1>Puppy Bowl</h1>
+  </header>
+
+  <form>
+    <label>Name: <input required id="new-name" type="text" /></label>
+    <label>Breed: <input required id="new-breed" type="text" /></label>
+    <label for="new-status">Status:
+  <select id="new-status" name="status" required>
+    <option value="bench" selected>Bench</option>
+    <option value="field">Field</option>
+  </select>
+</label>
+    <label>Image URL: <input id="new-image" type="text" /></label>
+    <button type="submit">Submit</button>
+  </form>
+
+  <main id="content">
+  
+  </main>
+
+  <footer>
+    <p>GET READY TO FUMBLE! -Cody Jones</p>
+  </footer>
+</body>
+</html>
+=======
     <head>
         <title>Puppy Bowl</title>
         <link rel="stylesheet" href="index.css" />

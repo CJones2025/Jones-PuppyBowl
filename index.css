@@ -46,6 +46,8 @@ body {
   object-fit: cover; 
 }
 
+
+=======
 .default-message {
   margin-bottom: 1rem;
   padding: 1rem;
@@ -53,5 +55,6 @@ body {
   color: #555;
   text-align: center;
 }
+
 
 
