@@ -1,65 +1,5 @@
 body {
   font-family: Arial, sans-serif;
-}
-
-#loading-screen {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255,255,255,0.8);
-  z-index: 100;
-}
-
-.player-list {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 0;
-}
-
-.player-card {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  width: 200px;
-  text-align: center;
-  background: #f9f9f9;
-  border-radius: 8px;
-}
-
-.player-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-}
-
-
-.single-player img {
-  max-width: 300px;
-  width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 1rem;
-  border-radius: 8px; 
-  object-fit: cover; 
-}
-
-
-
-.default-message {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  font-style: italic;
-  color: #555;
-  text-align: center;
-}
-
-
-
-body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 1rem;
   background: #888888;
@@ -111,8 +51,10 @@ body {
   object-fit: cover;
 }
 
-.default-message, #no-selection-message p {
+.default-message,
+#no-selection-message p {
   margin-top: 1rem;
+  margin-bottom: 1rem;
   padding: 1rem;
   font-style: italic;
   color: #000000;
@@ -152,5 +94,3 @@ button {
 .remove-btn:hover {
   background-color: #a71d2a;
 }
-
-

@@ -133,7 +133,7 @@ function renderAllPlayers() {
 
   $main.appendChild($ul);
 
-  // Show no-selection message when no one is selected
+
   if (!selectedPlayerId) {
     $noSelection.style.display = "block";
   } else {
