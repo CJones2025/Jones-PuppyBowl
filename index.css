@@ -2,8 +2,39 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 1rem;
+  padding-top: 80px;
+  padding-bottom: 80px;
   background: #888888;
   color: #333;
+}
+
+header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  text-align: center;
+  padding: 0.5rem 1rem 1rem 1rem;
+  background-color: #333;
+  color: white;
+  min-height: 60px;
+  height: 5%;
+  box-sizing: border-box;
+  font-size: 70%;
+}
+
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #333;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5%;
 }
 
 #loading-screen {
@@ -23,12 +54,16 @@ body {
   gap: 1rem;
   padding: 0;
   margin-top: 1rem;
+  max-width: 960px; 
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: flex-start;
 }
 
 .player-card {
+  flex: 0 0 160px;
   border: 1px solid #000000;
-  padding: 1rem;
-  width: 200px;
+  padding: 0.25rem;
   text-align: center;
   background: #f9f9f9;
   border-radius: 8px;
@@ -41,14 +76,44 @@ body {
   border-radius: 6px;
 }
 
-.single-player img {
-  max-width: 300px;
-  width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 1rem;
+.single-player {
+  background-color: #f9f9f9;
+  border: 1px solid #000;
   border-radius: 8px;
-  object-fit: cover;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  padding: 2rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.single-player h2 {
+  margin-bottom: 1rem;
+}
+
+.single-player p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.single-player img {
+  width: 50%;
+  height: auto;
+  border-radius: 8px;
+}
+
+#back-btn {
+  background-color: #555;
+  color: white;
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+#back-btn:hover {
+  background-color: #333;
 }
 
 .default-message,
@@ -93,4 +158,47 @@ button {
 
 .remove-btn:hover {
   background-color: #a71d2a;
+}
+
+#player-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  margin: 2rem auto;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: fit-content;
+}
+
+#player-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+#player-form input,
+#player-form select {
+  padding: 0.5rem;
+  width: 160px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#player-form button {
+  height: 40px;
+  padding: 0 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#player-form button:hover {
+  background-color: #218838;
 }
